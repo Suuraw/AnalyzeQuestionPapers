@@ -20,7 +20,7 @@ export function Hero() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Analyze PDFs with AI Precision
+              Analyze Your Question Papers with AI Precision
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               Upload your PDFs and get instant insights, summaries, and key information extracted using advanced AI analysis.

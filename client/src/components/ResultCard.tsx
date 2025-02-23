@@ -10,17 +10,19 @@ interface ResultCardProps {
 
 export function ResultCard({ result }: ResultCardProps) {
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold">{result.question}</CardTitle>
-        <div className="flex gap-2 text-sm text-muted-foreground">
+    <Card className="w-full flex flex-col h-full">
+      <CardHeader className="flex-shrink-0">
+        <CardTitle className="text-lg sm:text-xl font-semibold line-clamp-2">
+          {result.question}
+        </CardTitle>
+        <div className="flex flex-wrap gap-2 text-xs sm:text-sm text-muted-foreground">
           <span>Frequency: {result.frequency}</span>
-          <span>•</span>
+          <span className="hidden sm:inline">•</span>
           <span>Importance: {result.importance}</span>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-sm/relaxed">{result.answer}</p>
+      <CardContent className="flex-grow space-y-4 overflow-y-auto">
+        <p className="text-sm sm:text-base line-clamp-3">{result.answer}</p>
 
         {result.topics.length > 0 && (
           <div className="space-y-2">
@@ -30,7 +32,7 @@ export function ResultCard({ result }: ResultCardProps) {
             </div>
             <div className="flex flex-wrap gap-2">
               {result.topics.map((topic) => (
-                <Badge key={topic.id} variant="secondary">
+                <Badge key={topic.id} variant="secondary" className="text-xs sm:text-sm">
                   {topic.name} ({topic.score}%)
                 </Badge>
               ))}
@@ -46,17 +48,17 @@ export function ResultCard({ result }: ResultCardProps) {
                 <ExternalLink className="h-4 w-4" />
                 <span>External Resources</span>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-2 max-h-24 sm:max-h-32 overflow-y-auto">
                 {result.resources.map((resource) => (
-                  <li key={resource.id} className="text-sm">
+                  <li key={resource.id} className="text-xs sm:text-sm">
                     <a
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:text-primary"
+                      className="flex items-center gap-2 hover:text-primary line-clamp-1"
                     >
                       {resource.title}
-                      <Badge variant="outline">
+                      <Badge variant="outline" className="text-xs">
                         Relevance: {resource.relevanceScore}%
                       </Badge>
                     </a>
@@ -75,9 +77,9 @@ export function ResultCard({ result }: ResultCardProps) {
                 <BookOpen className="h-4 w-4" />
                 <span>Related Papers</span>
               </div>
-              <ul className="space-y-1">
+              <ul className="space-y-1 max-h-20 sm:max-h-24 overflow-y-auto">
                 {result.papers.map((paper) => (
-                  <li key={paper.id} className="text-sm">
+                  <li key={paper.id} className="text-xs sm:text-sm line-clamp-1">
                     {paper.name} ({paper.year})
                   </li>
                 ))}

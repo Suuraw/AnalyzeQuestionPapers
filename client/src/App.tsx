@@ -29,10 +29,10 @@ function App() {
     files.forEach((file) => {
       formData.append('pdfs', file);
     });
-
+//https://analyzequestionpapers.onrender.com/api/analyze
     try {
-      console.log(formData)
-      const response = await fetch('http://localhost:3000/api/analyze', {
+      console.log(formData);
+      const response = await fetch('https://analyzequestionpapers.onrender.com/api/analyze', {
         method: 'POST',
         body: formData,
       });
@@ -53,12 +53,12 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark">
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
         <Hero />
         
-        <main className="container py-12">
-          <div className="mx-auto max-w-4xl space-y-8">
+        <main className="container px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-grow">
+          <div className="mx-auto max-w-full sm:max-w-4xl space-y-6 sm:space-y-8">
             <FileUpload
               files={files}
               setFiles={setFiles}
@@ -66,9 +66,9 @@ function App() {
             />
 
             {error && (
-              <Alert variant="destructive">
+              <Alert variant="destructive" className="w-full">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription className="text-sm sm:text-base">{error}</AlertDescription>
               </Alert>
             )}
 
@@ -76,7 +76,7 @@ function App() {
               <Button
                 onClick={handleAnalyze}
                 disabled={files.length === 0 || isLoading}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3"
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isLoading ? 'Analyzing...' : 'Analyze PDFs'}
@@ -84,9 +84,11 @@ function App() {
             </div>
 
             {results.length > 0 && (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">Analysis Results</h2>
-                <div className="grid gap-6">
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-center sm:text-left">
+                  Analysis Results
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                   {results.map((result) => (
                     <ResultCard key={result.id} result={result} />
                   ))}
