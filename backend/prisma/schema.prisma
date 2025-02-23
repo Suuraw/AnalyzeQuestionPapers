@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model AnalyzeQuestion {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  question   String     @unique // Add this
+  frequency  Int
+  importance String
+  answer     String
+  topics     Topic[]
+  resources  Resource[]
+  papers     Paper[]
+}
+
+model Topic {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  score             Int
+  analyzeQuestionId String          @db.ObjectId
+  analyzeQuestion   AnalyzeQuestion @relation(fields: [analyzeQuestionId], references: [id])
+}
+
+model Resource {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  type              String
+  title             String
+  url               String
+  relevanceScore    Int
+  analyzeQuestionId String          @db.ObjectId
+  analyzeQuestion   AnalyzeQuestion @relation(fields: [analyzeQuestionId], references: [id])
+}
+
+model Paper {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  year              String
+  analyzeQuestionId String          @db.ObjectId
+  analyzeQuestion   AnalyzeQuestion @relation(fields: [analyzeQuestionId], references: [id])
+}
